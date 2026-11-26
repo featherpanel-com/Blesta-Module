@@ -1,0 +1,4 @@
+<?php
+$row_title = $this->_('Featherpanel.edit_row.box_title', true);
+$row_button = $this->_('Featherpanel.row.edit_btn', true);
+include __DIR__ . DIRECTORY_SEPARATOR . 'row_form.pdt';

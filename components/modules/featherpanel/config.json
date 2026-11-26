@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0",
+    "name": "Featherpanel.name",
+    "description": "Featherpanel.description",
+    "authors": [
+        {
+            "name": "MythicalSystems",
+            "url": "https://featherpanel.com"
+        }
+    ],
+    "service": {
+        "name_key": "featherpanel_label"
+    },
+    "module": {
+        "row": "Featherpanel.module_row",
+        "rows": "Featherpanel.module_row_plural",
+        "row_key": "server_name",
+        "group": "Featherpanel.module_group"
+    },
+    "email_tags": {
+        "module": ["server_name", "panel_url"],
+        "package": ["product_type", "memory", "disk", "cpu", "cpus", "cores"],
+        "service": ["featherpanel_label", "featherpanel_type", "featherpanel_ip", "featherpanel_port", "featherpanel_username", "featherpanel_password", "featherpanel_vds_user", "featherpanel_vds_password", "featherpanel_domain"]
+    }
+}

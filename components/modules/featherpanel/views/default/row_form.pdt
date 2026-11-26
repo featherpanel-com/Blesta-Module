@@ -1,0 +1,53 @@
+        <?php
+        // Shared by add_row.pdt and edit_row.pdt ($row_title and $row_button are set by the caller).
+        $this->Widget->clear();
+        $this->Widget->setLinkButtons([]);
+        $this->Widget->create($row_title);
+        ?>
+        <div class="inner">
+            <?php $this->Form->create(); ?>
+            <div class="title_row first">
+                <h3><?php $this->_('Featherpanel.row.basic_title');?></h3>
+            </div>
+            <div class="pad">
+                <ul>
+                    <li>
+                        <?php
+                        $this->Form->label($this->_('Featherpanel.row_meta.server_name', true), 'server_name');
+                        $this->Form->fieldText('server_name', ($vars->server_name ?? null), ['id' => 'server_name']);
+                        ?>
+                    </li>
+                    <li>
+                        <?php $this->Form->label($this->_('Featherpanel.row_meta.panel_url', true), 'panel_url', ['class' => 'inline']);?>
+                        <span class="tooltip block"><?php $this->_('AppController.tooltip.text');?><div><?php $this->_('Featherpanel.!tooltip.panel_url');?></div></span>
+                        <?php $this->Form->fieldText('panel_url', ($vars->panel_url ?? null), ['id' => 'panel_url', 'class' => 'block', 'placeholder' => 'https://panel.example.com']);?>
+                    </li>
+                    <li>
+                        <?php $this->Form->label($this->_('Featherpanel.row_meta.api_key', true), 'api_key', ['class' => 'inline']);?>
+                        <span class="tooltip block"><?php $this->_('AppController.tooltip.text');?><div><?php $this->_('Featherpanel.!tooltip.api_key');?></div></span>
+                        <?php $this->Form->fieldPassword('api_key', ['id' => 'api_key', 'class' => 'block', 'value' => ($vars->api_key ?? null)]);?>
+                    </li>
+                    <li>
+                        <?php
+                        $this->Form->fieldCheckbox('verify_ssl', 'true', ($vars->verify_ssl ?? 'true') == 'true', ['id' => 'verify_ssl']);
+                        $this->Form->label($this->_('Featherpanel.row_meta.verify_ssl', true), 'verify_ssl', ['class' => 'inline']);
+                        ?>
+                    </li>
+                    <li>
+                        <?php $this->Form->label($this->_('Featherpanel.row_meta.external_id_prefix', true), 'external_id_prefix', ['class' => 'inline']);?>
+                        <span class="tooltip block"><?php $this->_('AppController.tooltip.text');?><div><?php $this->_('Featherpanel.!tooltip.external_id_prefix');?></div></span>
+                        <?php $this->Form->fieldText('external_id_prefix', ($vars->external_id_prefix ?? 'blesta-'), ['id' => 'external_id_prefix', 'class' => 'block']);?>
+                    </li>
+                    <li>
+                        <?php $this->Form->label($this->_('Featherpanel.row_meta.vds_wait_seconds', true), 'vds_wait_seconds', ['class' => 'inline']);?>
+                        <span class="tooltip block"><?php $this->_('AppController.tooltip.text');?><div><?php $this->_('Featherpanel.!tooltip.vds_wait_seconds');?></div></span>
+                        <?php $this->Form->fieldText('vds_wait_seconds', ($vars->vds_wait_seconds ?? '60'), ['id' => 'vds_wait_seconds', 'class' => 'block']);?>
+                    </li>
+                </ul>
+            </div>
+            <div class="button_row">
+                <?php $this->Form->fieldSubmit('save', $row_button, ['class' => 'btn btn-primary float-right']); ?>
+            </div>
+            <?php $this->Form->end(); ?>
+        </div>
+        <?php $this->Widget->end(); ?>

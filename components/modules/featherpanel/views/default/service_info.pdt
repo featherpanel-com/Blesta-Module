@@ -1,0 +1,36 @@
+<?php
+// Shared by admin_service_info.pdt and client_service_info.pdt ($is_admin is set by the caller).
+$type = $fields->featherpanel_type ?? 'game';
+$address = '';
+if (!empty($fields->featherpanel_ip)) {
+    $address = $fields->featherpanel_ip . (!empty($fields->featherpanel_port) ? ':' . $fields->featherpanel_port : '');
+}
+?>
+    <div class="table-responsive">
+        <table class="table table-curved table-striped">
+            <thead>
+                <tr>
+                    <th><?php $this->_('Featherpanel.info.type');?></th>
+                    <th><?php $this->_('Featherpanel.info.name');?></th>
+                    <th><?php $this->_($type === 'webspace' ? 'Featherpanel.info.domain' : 'Featherpanel.info.address');?></th>
+                    <th><?php $this->_('Featherpanel.info.panel_user');?></th>
+                    <?php if (!empty($password)) { ?><th><?php $this->_('Featherpanel.info.panel_password');?></th><?php } ?>
+                    <?php if ($type === 'vds') { ?><th><?php $this->_('Featherpanel.info.vds_login');?></th><?php } ?>
+                    <th><?php $this->_('Featherpanel.info.panel');?></th>
+                    <?php if ($is_admin) { ?><th><?php $this->_('Featherpanel.info.reference');?></th><?php } ?>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php $this->_('Featherpanel.product_type.' . $type);?><?php if (($fields->featherpanel_pending ?? '0') === '1') { ?> (<?php $this->_('Featherpanel.info.pending');?>)<?php } ?></td>
+                    <td><?php echo $this->Html->safe($fields->featherpanel_label ?? '');?></td>
+                    <td><?php echo $this->Html->safe($type === 'webspace' ? ($fields->featherpanel_domain ?? $fields->featherpanel_label ?? '') : $address);?></td>
+                    <td><?php echo $this->Html->safe($username ?? '');?></td>
+                    <?php if (!empty($password)) { ?><td><?php echo $this->Html->safe($password);?></td><?php } ?>
+                    <?php if ($type === 'vds') { ?><td><?php echo $this->Html->safe(($fields->featherpanel_vds_user ?? 'root') . ' / ' . ($fields->featherpanel_vds_password ?? ''));?></td><?php } ?>
+                    <td><a href="<?php echo $this->Html->safe(rtrim((string) $panel_url, '/') . '/');?>" target="_blank" rel="noopener"><?php echo $this->Html->safe($panel_url);?></a></td>
+                    <?php if ($is_admin) { ?><td><?php echo $this->Html->safe(trim(($fields->featherpanel_id ?? '') . ' ' . ($fields->featherpanel_uuid ?? '') . ' ' . ($fields->featherpanel_external_id ?? '')));?></td><?php } ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>

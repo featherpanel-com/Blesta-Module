@@ -1,0 +1,65 @@
+<?php
+// Shared by tab_client_manage.pdt and tab_admin_manage.pdt.
+$state = null;
+if ($resource !== null) {
+    $state = $resource['state'] ?? ($resource['status'] ?? null);
+}
+?>
+<div class="featherpanel-tab">
+    <?php if (!empty($error)) { ?>
+        <div class="alert alert-danger"><?php echo $this->Html->safe($error);?></div>
+    <?php } ?>
+
+    <?php if ($resource === null && empty($error)) { ?>
+        <div class="alert alert-warning"><?php $this->_('Featherpanel.tab.not_found');?></div>
+    <?php } elseif ($resource !== null && !empty($resource['pending'])) { ?>
+        <div class="alert alert-info"><?php $this->_('Featherpanel.tab.creating');?></div>
+    <?php } elseif ($resource !== null) { ?>
+        <?php if ($service->status === 'suspended' || !empty($resource['suspended'])) { ?>
+            <div class="alert alert-warning"><?php $this->_('Featherpanel.tab.suspended');?></div>
+        <?php } ?>
+        <table class="table table-curved">
+            <tr>
+                <th><?php $this->_('Featherpanel.info.type');?></th>
+                <td><?php $this->_('Featherpanel.product_type.' . $type);?></td>
+            </tr>
+            <tr>
+                <th><?php $this->_('Featherpanel.info.name');?></th>
+                <td><?php echo $this->Html->safe($resource['name'] ?? '');?></td>
+            </tr>
+            <?php if (!empty($resource['ip'])) { ?>
+            <tr>
+                <th><?php $this->_('Featherpanel.info.address');?></th>
+                <td><?php echo $this->Html->safe($resource['ip'] . (!empty($resource['port']) ? ':' . $resource['port'] : ''));?></td>
+            </tr>
+            <?php } ?>
+            <?php if (!empty($resource['domains'])) { ?>
+            <tr>
+                <th><?php $this->_('Featherpanel.info.domain');?></th>
+                <td><?php echo $this->Html->safe(implode(', ', $resource['domains']));?></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <th><?php $this->_('Featherpanel.tab.status');?></th>
+                <td><?php echo $this->Html->safe($state !== null && $state !== '' ? ucfirst((string) $state) : $this->_('Featherpanel.tab.state.unknown', true));?></td>
+            </tr>
+        </table>
+
+        <?php if ($service->status === 'active') { ?>
+            <?php if (!empty($login_url)) { ?>
+                <div class="alert alert-success">
+                    <?php $this->_('Featherpanel.tab.login_ready');?>
+                    <a class="btn btn-success" href="<?php echo $this->Html->safe($login_url);?>" target="_blank" rel="noopener noreferrer"><?php $this->_('Featherpanel.tab.login_open');?></a>
+                </div>
+                <script type="text/javascript">window.open(<?php echo json_encode($login_url);?>, '_blank', 'noopener');</script>
+            <?php } else { ?>
+                <?php
+                $this->Form->create();
+                $this->Form->fieldHidden('featherpanel_login', '1');
+                $this->Form->fieldSubmit('submit', $this->_('Featherpanel.tab.login_btn', true), ['class' => 'btn btn-primary']);
+                $this->Form->end();
+                ?>
+            <?php } ?>
+        <?php } ?>
+    <?php } ?>
+</div>
